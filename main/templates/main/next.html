@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+
+{% block tittle%}
+registration
+{%endblock%}
+
+{% block main%}
+<h3 style="width: 100%;" class="dark container center mb-4 mt-5">Отправьте код подтверждения</h3>
+<p class="container " style="color: rgb(218, 30, 30);">{{error}}</p>
+<form method="post" style="width: 100%;" class="container center">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-success mt-4">Отправить</button>
+</form>
+{% endblock %}

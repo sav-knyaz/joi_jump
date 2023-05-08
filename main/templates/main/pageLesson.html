@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block tittle%}
+registration
+{%endblock%}
+
+{% block main%}
+<div class="container mt-4">
+    <p style="border-bottom: 1px solid rgb(129, 121, 110); color: rgb(129, 121, 110);">{{lesson.data}}</p>
+    <div class="container" style="background-color: rgba(255, 166, 0, 0.055);">
+            <div class="left-aling"style="display: inline-block; width: 20%; border-left:3px solid orange;">
+                <p class="text-center" style="font-weight: bold;">
+                    {{lesson.time}}
+                </p>
+                <p class="text-center">
+                    {{lesson.duration}}
+                </p>
+            </div>
+            <div style="display: inline-block; width: 60%; ">
+                <p style="font-weight: bold;">
+                    {{lesson.type_lesson}}
+                </p>
+                <p>
+                    {{lesson.trainer}}
+                </p>
+            </div>
+    </div>
+</div>
+{% endblock %}

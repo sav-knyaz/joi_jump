@@ -1,0 +1,101 @@
+{%extends 'main/base.html' %}
+
+{% block link%}
+{% endblock %}
+{% block tittle%}
+{{tittle}}
+{%endblock%}
+
+{%block main%}
+<main class="container" style="margin-bottom: 30px;">
+        <div class="container" style="background-color: #202020;">
+        <div class="wrapp-img container text-center " style="overflow: hidden; width: 40%; margin-top: 7%;">
+        <img style="width: 100%;;" src="https://sun9-24.userapi.com/impg/pRSVqYIYcanVvfcyNIrfuomDKjdE7qX4PG5T6Q/Urf2eA10nHo.jpg?size=1280x1280&quality=95&sign=1e8b249051f967adcb9b13af85cc2a41&type=album">
+        </div>
+        </div>
+        <div class="container text-center">
+            <a href="{% url 'person' %}" class="btn btn-lg btn-warning mt-5" style="width: 100%;">
+                Личный кабинет
+            </a>
+            <a href="{% url 'timetable' %}" class="btn btn-lg btn-warning mt-2" style="width: 100%;">
+                Расписание
+            </a>
+        </div>
+        <div class="container dark text-left mt-5">
+            <span>
+                Ближайшие тренеровки: {{type}}
+            </span>
+        </div>
+        <div class="container dark text-left mt-5">
+            {% for el in lessons %}
+                <div class="container mt-4">
+                    <p style="border-bottom: 1px solid rgb(129, 121, 110); color: rgb(129, 121, 110);">{{el.data}}</p>
+                   <div class="container" style="background-color: rgba(255, 166, 0, 0.055);">
+                    <div class="left-aling "style="display: inline-block; width: 20%; border-left:3px solid orange;">
+                        <p class="text-center mt-1" style="font-weight: bold;">
+                            {{el.time}}
+                        </p>
+                        <p class="text-center mt-2">
+                            {{el.duration}}
+                        </p>
+                    </div>
+                    <div style="display: inline-block; width: 60%; ">
+                        <p style="font-weight: bold;">
+                            {{el.type_lesson}}
+                        </p>
+                        <p class="mt-2">
+                            {{el.trainer}}
+                        </p>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                    <p id="{{el.id}}" class="lesson_create" style="display: inline-block; font-size: 50px; font-weight: 300; width: 5%; cursor: pointer; color: black; text-decoration: none;">
+                        +
+                    </p>
+                    {% endif %}
+                </div>
+                </div>
+            {%endfor%}
+        </div>
+</main>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+            }
+        }
+        return cookieValue;
+        }
+
+    let lessons = document.querySelectorAll('.lesson_create')
+
+    for(let i = 0; i < lessons.length; i++){
+        lessons[i].addEventListener('pointerup', ()=>{
+        fetch('http://127.0.0.1:8000', {
+                            method: "POST",
+                            credentials: "same-origin",
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "X-CSRFToken": getCookie("csrftoken"),
+                            },
+                            body: JSON.stringify({id: lessons[i].id, type: 'push'})
+                    }).then(response => {
+                        return response.json()
+                        })
+                  .then(data => {
+                        // обработка ответа
+                        const messege = data.messeg;
+                        alert(messege); // выводим сообщение на экран
+                    })
+        })
+    }
+</script>
+{%endblock%}

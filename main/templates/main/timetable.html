@@ -1,0 +1,111 @@
+{%extends 'main/base.html' %}
+
+
+{% block main%}
+<main class="container" style="margin-bottom: 30px;">
+    
+    <div class="slider">
+        <div class="slider__wrapp " >
+        <div class="slider__slides container">
+            
+            {% for el in data %}
+            <div class="slider__slide" style="border: 2ps solid black;">
+                {{el.data}}
+            </div>
+            {% endfor%}
+        </div>
+        </div>
+        <div class="slider__arrows container">
+            <div class="slider__arrow slider__arrow--left"></div>
+            <div class="slider__arrow slider__arrow--right"></div>
+        </div>
+    </div>
+    <div class="slider-les">
+        <div class="slider-les__wrapp">
+            <div class="slider-les__slides ">
+                {% for elem in data%}
+                {% if elem.lessons %}
+                    <div class="slider-les__slide ">
+                        {% for el in elem.lessons %}
+                            <div class="container mt-4">
+                                <p style="border-bottom: 1px solid rgb(129, 121, 110); color: rgb(129, 121, 110);">{{el.data}}</p>
+                            <div class="container" style="background-color: rgba(255, 166, 0, 0.055);">
+                                <div class="left-aling"style="display: inline-block; width: 20%; border-left:3px solid orange;">
+                                    <p class="text-center" style="font-weight: bold;">
+                                        {{el.time}}
+                                    </p>
+                                    <p class="text-center">
+                                        {{el.duration}}
+                                    </p>
+                                </div>
+                                <div style="display: inline-block; width: 60%; ">
+                                    <p style="font-weight: bold;">
+                                        {{el.type_lesson}}
+                                    </p>
+                                    <p>
+                                        {{el.trainer}}
+                                    </p>
+                                </div>
+                                {% if request.user.is_authenticated %}
+                                <div id="{{el.id}}" class="lesson_create" style="display: inline-block; font-size: 50px; font-weight: 300; width: 5%; cursor: pointer; color: black;">
+                                    +
+                                </div>
+                                {% endif %}
+                            </div>
+                            </div>
+                            {%endfor%}
+                    </div>
+                    {% else %}
+                    <div class="slider-les__slide ">
+                        <p class="container text-center">
+                            Занятия в этот день отсутствуют.
+                        </p>
+                    </div>
+                    {% endif %}
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+            }
+        }
+        return cookieValue;
+        }
+
+    let lessons = document.querySelectorAll('.lesson_create')
+
+    for(let i = 0; i < lessons.length; i++){
+        lessons[i].addEventListener('pointerup', ()=>{
+        fetch('http://127.0.0.1:8000', {
+                            method: "POST",
+                            credentials: "same-origin",
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "X-CSRFToken": getCookie("csrftoken"),
+                            },
+                            body: JSON.stringify({id: lessons[i].id, type: 'push'})
+                    }).then(response => {
+                    return response.json()
+                        })
+                  .then(data => {
+                        // обработка ответа
+                        const messege = data.messeg;
+                        alert(messege); // выводим сообщение на экран
+                    })
+        })
+    }
+</script>
+{%endblock%}

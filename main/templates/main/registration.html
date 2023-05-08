@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block tittle%}
+registration
+{%endblock%}
+
+{% block main%}
+<h3 style="width: 40%;" class="dark container center mb-4">Регистрация</h3>
+<form method="post" style="width: 100%;" class="container center mt-4">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-success mt-5">Создать</button>
+        
+        <span>{{error}}</span>
+</form>
+{% endblock %}

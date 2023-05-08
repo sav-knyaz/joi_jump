@@ -1,0 +1,105 @@
+{% extends 'main/base.html' %}
+
+{% block tittle%}
+Старница создания таски
+{%endblock%}
+
+{%block main%}
+<main class="container mt-5" style="margin-bottom: 30px;">
+        <p class="container center">{{error}}</p>
+        <div class="container">
+            <h3>
+                Аккаунт:
+            </h3>
+            <form method="post" style="width: 100%; display: inline-block" class="container">
+                {% csrf_token %}
+                <input class='form-control mt-2' value="{{user.phone}}" name="phone"/>
+                <input class='form-control mt-2' value="{{user.first_name}}" name="first_name"/>
+                <input class='form-control mt-2' value="{{user.surname}}" name="surname"/>
+                <input type="date" class='form-control mt-2' value="{{user_date}}" name="birthday"/>
+                <button type="submit" class="btn btn-danger mt-4 mb-5" >Изменить</button>
+            </form>
+        </div>
+        <div class="container mb-5">
+            <h3>
+                Абонемент:
+            </h3>
+            <p style="font-size: 25px;">{{subscript}}</p>
+        </div>
+        <div class="container">
+            <h3>Мои занятия:</h3>
+            {% for el in lessons %}
+                <div class="container mt-4">
+                    <p style="border-bottom: 1px solid rgb(129, 121, 110); color: rgb(129, 121, 110);">{{el.data}}</p>
+                <div class="container" style="background-color: rgba(255, 166, 0, 0.055);">
+                    <div class="left-aling"style="display: inline-block; width: 20%; border-left:3px solid orange;">
+                        <p class="text-center" style="font-weight: bold;">
+                            {{el.time}}
+                        </p>
+                        <p class="text-center">
+                            {{el.duration}}
+                        </p>
+                    </div>
+                    <div style="display: inline-block; width: 60%; ">
+                        <p style="font-weight: bold;">
+                            {{el.type_lesson}}
+                        </p>
+                        <p>
+                            {{el.trainer}}
+                        </p>
+                    </div>
+                    <p id="{{el.id}}" class="lesson_delete" style="display: inline-block; transform: rotateZ(45deg); font-size: 40px; font-weight: 400; width: 4%; cursor: pointer; color: black; text-decoration: none; margin-bottom: 0;">
+                        +
+                    </p>
+                </div>
+                </div>
+                {%endfor%}
+        </div>
+</main>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+            }
+        }
+        return cookieValue;
+        }
+
+    let less = document.querySelectorAll('.lesson_delete')
+
+    for(let i = 0; i < less.length; i++){
+        less[i].addEventListener('pointerup', ()=>{
+        fetch('http://127.0.0.1:8000/personArea', {
+                            method: "POST",
+                            credentials: "same-origin",
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "X-CSRFToken": getCookie("csrftoken"),
+                                "Type-Post":'delete',
+                            },
+                            body: JSON.stringify({id: less[i].id, type: 'delete'})
+                }).then(response => {
+                    if (response.redirected) {
+                        window.location.replace(response.url);
+                        // заменяем текущий URL на URL из ответа
+                    }
+                    return response.json()
+                        })
+                  .then(data => {
+                        // обработка ответа
+                        const messege = data.messeg;
+                        alert(messege); // выводим сообщение на экран
+                    })
+        })
+    }
+</script>
+{%endblock%}

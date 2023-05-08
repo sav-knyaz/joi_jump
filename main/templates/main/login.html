@@ -1,0 +1,18 @@
+{%extends 'main/base.html' %}
+
+{% block tittle %}
+login
+{%endblock%}
+
+{% block main%}
+<h3 style="width: 40%;" class="dark container center mb-4">Авторизация</h3>
+<p class="container center" style="color:  rgb(218, 30, 30);">{{error}}</p>
+<form method="post" style="width: 100%;" class="container center">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-success mt-4">Войти</button>
+        <a href="{% url 'formPhone' %}" class="container mt-3" style="display: inline-block; color: rgb(73, 69, 69); width: 80%; text-align: right;">
+            Нет аккаунта / забыли пароль?
+        </a>
+</form>
+{% endblock %}

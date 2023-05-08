@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block tittle%}
+Старница создания таски
+{%endblock%}
+
+{%block main%}
+<div class="container mt-5">
+    <h3 style="width: 40%;" class="dark container center">Форма создания задания</h3>
+    <form method="post" style="width: 40%;" class="container center">
+        {% csrf_token %}
+            {{form.tittle}}<br/>
+            {{form.task}}<br/>
+            <button type="submit" class="btn btn-success">Добавить</button>
+            <span>{{error}}</span>
+    </form>
+</div>
+{%endblock%}

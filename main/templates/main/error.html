@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block tittle%}
+error
+{%endblock%}
+
+{% block main%}
+<h3 style="width: 100%;" class="dark container center mb-4">Приносим свои извинения! :((
+    Сервис временно не работает, попробуйте позже.</h3>
+    <a href="{% url 'home' %}" class="container mt-3" style="display: inline-block; color: rgb(73, 69, 69); width: 80%; text-align: center;">
+        Главная страница
+    </a>
+{% endblock %}
