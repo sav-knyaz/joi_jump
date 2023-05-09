@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 
 {% block tittle%}
-Старница создания таски
+Личный кабинет
 {%endblock%}
 
 {%block main%}
@@ -26,7 +26,7 @@
             </h3>
             <p style="font-size: 25px;">{{subscript}}</p>
         </div>
-        <div class="container">
+        <div >
             <h3>Мои занятия:</h3>
             {% for el in lessons %}
                 <div class="container mt-4">
@@ -78,7 +78,7 @@
 
     for(let i = 0; i < less.length; i++){
         less[i].addEventListener('pointerup', ()=>{
-        fetch('http://127.0.0.1:8000/personArea', {
+        fetch('https://joijump.pythonanywhere.com/personArea', {
                             method: "POST",
                             credentials: "same-origin",
                             headers: {

@@ -7,11 +7,11 @@ from .managers import UserManager
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField('phone_number', unique=True, max_length=10)
-    
+
     first_name = models.CharField('И.О.', max_length=30, blank=True)
     surname = models.CharField('Фамилия', max_length=30, blank=True)
     birthday = models.DateField('День рождения', default='2000-12-12')
-  
+
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
@@ -53,7 +53,7 @@ class Subscription(models.Model):
         return str(self.name)
 
     class Meta:
-        verbose_name = 'Абонемент'
+        verbose_name = 'Абонимент'
         verbose_name_plural = 'Абонименты'
 
 # Расписание - запись юзера на занятие

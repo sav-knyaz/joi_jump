@@ -7,7 +7,7 @@
 {%endblock%}
 
 {%block main%}
-<main class="container" style="margin-bottom: 30px;">
+<main  style="margin-bottom: 30px;">
         <div class="container" style="background-color: #202020;">
         <div class="wrapp-img container text-center " style="overflow: hidden; width: 40%; margin-top: 7%;">
         <img style="width: 100%;;" src="https://sun9-24.userapi.com/impg/pRSVqYIYcanVvfcyNIrfuomDKjdE7qX4PG5T6Q/Urf2eA10nHo.jpg?size=1280x1280&quality=95&sign=1e8b249051f967adcb9b13af85cc2a41&type=album">
@@ -23,7 +23,7 @@
         </div>
         <div class="container dark text-left mt-5">
             <span>
-                Ближайшие тренеровки: {{type}}
+                Ближайшие тренировки: {{type}}
             </span>
         </div>
         <div class="container dark text-left mt-5">
@@ -79,7 +79,7 @@
 
     for(let i = 0; i < lessons.length; i++){
         lessons[i].addEventListener('pointerup', ()=>{
-        fetch('http://127.0.0.1:8000', {
+        fetch('https://joijump.pythonanywhere.com/', {
                             method: "POST",
                             credentials: "same-origin",
                             headers: {

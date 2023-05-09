@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ztjeolc&=ap6e_qd+7n&%cun!hwilqd*6!%7(v4o7g$9zld%j5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['joijump.pythonanywhere.com',]
 
 
 # Application definition
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -117,10 +117,10 @@ DATE_INPUT_FORMATS = ['%d.%m.%Y']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR /"main"/"static",
+   BASE_DIR / "static",
 ]
 
 # Default primary key field type

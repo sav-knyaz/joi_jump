@@ -1,13 +1,15 @@
 {%extends 'main/base.html' %}
 
-
+{% block tittle%}
+Расписание
+{%endblock%}
 {% block main%}
 <main class="container" style="margin-bottom: 30px;">
-    
+
     <div class="slider">
         <div class="slider__wrapp " >
         <div class="slider__slides container">
-            
+
             {% for el in data %}
             <div class="slider__slide" style="border: 2ps solid black;">
                 {{el.data}}
@@ -58,7 +60,7 @@
                     {% else %}
                     <div class="slider-les__slide ">
                         <p class="container text-center">
-                            Занятия в этот день отсутствуют.
+                            Занятия {{el.data}} отсутствуют.
                         </p>
                     </div>
                     {% endif %}
@@ -89,7 +91,7 @@
 
     for(let i = 0; i < lessons.length; i++){
         lessons[i].addEventListener('pointerup', ()=>{
-        fetch('http://127.0.0.1:8000', {
+        fetch('https://joijump.pythonanywhere.com/', {
                             method: "POST",
                             credentials: "same-origin",
                             headers: {

@@ -1,6 +1,5 @@
 import urllib.parse
 import requests
-import json
 from .models import Subscription, Lessons, TimeTable
 from django.db.models import F
 import datetime
@@ -27,8 +26,8 @@ def translat_in_russion(string):
 
 
 def send_sms(user_phone: str, message: str, code):
-    API_KEY = 'Kirill_2204'  #password
-    LOGIN = 'vk_684463' 
+    API_KEY = 'wBQX607lena'  #password
+    LOGIN = 'elenabudyuk@yandex.ru'
     phone = '7' + user_phone
     sms_text = f'{message} {code}'
     params = {
@@ -40,7 +39,6 @@ def send_sms(user_phone: str, message: str, code):
     }
     url = 'https://smsc.ru/sys/send.php?' + urllib.parse.urlencode(params)
     sms_response = requests.get(url)
-    print('+++++++++++')
     response_json = str(sms_response.content)
     print(response_json)
     if response_json.find('ERROR = 9') == -1 and response_json.find('OK') == -1:
